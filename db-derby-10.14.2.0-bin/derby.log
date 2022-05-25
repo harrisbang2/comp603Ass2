@@ -80,3 +80,12 @@ os.arch=amd64
 os.version=10.0
 derby.system.home=C:\Users\harri\OneDrive\바탕 화면\P70_20111406\db-derby-10.14.2.0-bin
 데이터베이스 클래스 로더가 시작됨 - derby.database.classpath=''
+----------------------------------------------------------------
+Wed May 25 23:01:04 NZST 2022: Derby 엔진 종료
+----------------------------------------------------------------
+Wed May 25 23:01:04 NZST 2022:
+클래스 로더 jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e이(가) 있는 데이터베이스 디렉토리 C:\Users\harri\OneDrive\바탕 화면\p70_20111406\db-derby-10.14.2.0-bin\BookStoreDB의 인스턴스 601a400f-0180-fa14-d942-000067b0e7ed 종료 
+----------------------------------------------------------------
+Wed May 25 23:01:04 NZST 2022:
+클래스 로더 jdk.internal.loader.ClassLoaders$AppClassLoader@70dea4e이(가) 있는 데이터베이스 디렉토리 C:\Users\harri\OneDrive\바탕 화면\p70_20111406\db-derby-10.14.2.0-bin\Millionare의 인스턴스 a816c00e-0180-fa14-d942-000067b0e7ed 종료 
+----------------------------------------------------------------

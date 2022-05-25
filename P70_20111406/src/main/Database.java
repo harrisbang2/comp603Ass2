@@ -22,12 +22,7 @@ public class Database {
     final static String dbusername = "abc";  //your DB username
     final static String dbpassword = "abc";   //your DB password
 
-    /**
-     * Step 3: Create the method for initializing the connection between the
-     * program and the database.
-     *
-     * Go to Controller.java for Step 4.
-     */
+
     public void dbsetup() {
         try {
             conn = DriverManager.getConnection(url, dbusername, dbpassword);
@@ -37,20 +32,14 @@ public class Database {
             if (!checkTableExisting(tableName)) {
                 statement.executeUpdate("CREATE TABLE " + tableName + " (userid VARCHAR(12), password VARCHAR(12), score INT)");
             }
-            //statement.executeUpdate("INSERT INTO " + tableName + " VALUES('Fiction',0),('Non-fiction',10),('Textbook',20)");
+          
             statement.close();
 
         } catch (Throwable e) {
             System.out.println("error");
         }
     }
-    /**
-     * Step 7:
-     *
-     * @param username
-     * @param password
-     * @return data
-     */
+
     public Account checkName(String username, String password) {
         Account acc = new Account(); // Initialize an instance of Data.
         try {
@@ -79,17 +68,47 @@ public class Database {
                  * password.
                  */
                 System.out.println("no such user");
-                statement.executeUpdate("INSERT INTO UserInfo "
-                        + "VALUES('" + username + "', '" + password + "', 0)");
+               
                 acc.currentScore = 0;
-                acc.Checker = true;
+                acc.Checker = false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
         }
         return acc; //Back to checkName() of Model.java.
     }
-
+    
+    public Account register(String username, String password) throws SQLException{
+                 Account acc = new Account(); // Initialize an instance of Data.
+        try {
+            Statement statement = conn.createStatement();
+            ResultSet rs = statement.executeQuery("SELECT userid, password, score FROM UserInfo "
+                    + "WHERE userid = '" + username + "'");
+            if (rs.next()) {
+                String pass = rs.getString("password");
+                System.out.println("***" + pass);
+                System.out.println("found user");
+                //pop off panel?
+                if (password.compareTo(pass) == 0) {
+                    acc.currentScore = rs.getInt("score");
+                    acc.Checker = true;
+                } else {
+                    acc.Checker = false;
+                }
+            } else {
+       
+                System.out.println("no such user");
+                statement.executeUpdate("INSERT INTO UserInfo "
+                        + "VALUES('" + username + "', '" + password + "', 0)");
+                statement.executeBatch();
+                acc.currentScore = 0;
+                acc.Checker = false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return acc; //Back to checkName() of Model.java.
+}
     private boolean checkTableExisting(String newTableName) {
         boolean exists = false;
         try {

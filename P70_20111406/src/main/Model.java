@@ -1,6 +1,7 @@
 
 package main;
 
+import java.sql.SQLException;
 import java.util.Observable;
 import java.util.Random;
 
@@ -32,9 +33,7 @@ public class Model extends Observable {
      */
     public void checkName(String username, String password) {
         this.username = username; // Store username
- 
         this.acc = this.db.checkName(username, password); 
-       
         if (acc.Checker) {
             this.newQuestion();
         }
@@ -42,6 +41,16 @@ public class Model extends Observable {
         this.notifyObservers(this.acc); 
     }
     
+    public void register(String username, String password) throws SQLException {
+        this.username = username; // Store username
+        this.acc = this.db.register(username, password); 
+        if (acc.Checker) {
+            this.newQuestion();
+        }
+        this.setChanged(); 
+        this.notifyObservers(this.acc); 
+    }
+
     public void newQuestion() {
         this.acc.num1 = getNumber();
         this.acc.num2 = getNumber();
@@ -65,11 +74,12 @@ public class Model extends Observable {
         this.notifyObservers(this.acc);
     }
 
-    public void quitGame() {
+    public void restartGame() {
      
         this.db.SaveGame(this.acc.currentScore, this.username); 
         this.acc.quitFlag = true; 
         this.setChanged();
         this.notifyObservers(this.acc);
     }
+
 }

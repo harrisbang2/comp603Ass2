@@ -24,6 +24,7 @@ public class Gui extends JFrame implements Observer {
     public JTextField unInput = new JTextField(8);
     public JTextField pwInput = new JTextField(10);
     private JLabel wrongName = new JLabel("Wrong username or passwork!");
+    private JLabel MadeAName = new JLabel("Account created!");
    ////
    ///2nd panel
     private JPanel QuizPanel = new JPanel();
@@ -33,7 +34,7 @@ public class Gui extends JFrame implements Observer {
     private JLabel additionLabel = new JLabel();
     //private JTextField secondNumber = new JTextField(10);
     private JButton nextButton = new JButton("Next");
-    private JButton quitButton = new JButton("Quit");
+    private JButton restartButton = new JButton("restart");
 
 
     public JLabel message = new JLabel("Welcome!", JLabel.CENTER);
@@ -41,13 +42,7 @@ public class Gui extends JFrame implements Observer {
 
     private boolean started = false; // To identify if the game part starts.
 
-    /**
-     * Step 1: The constructor initializes the frame window as well as the login
-     * interface.
-     *
-     * Note: We need to define the events of ActionListener in the Controller
-     * class. Go to Model.java for Step 2.
-     */
+
     public Gui() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
@@ -56,20 +51,26 @@ public class Gui extends JFrame implements Observer {
         this.userPanel.add(unInput);
         this.userPanel.add(pWord);
         this.userPanel.add(pwInput);
-        loginButton.setBounds(100, 100, 300, 300);
         this.userPanel.add(loginButton);
+        this.userPanel.add(registerButton);
         this.add(this.message, BorderLayout.BEFORE_FIRST_LINE);
         this.add(userPanel);
         this.setVisible(true);
     }
+            public void addedUser(){
+    userPanel.add(MadeAName);
+    };
+
+     public void Removeinvalid(){
+     this.message.setText("Welcome");
+    };
 
     public void startQuiz() {
-        QuizPanel.add(firstnumber);
-        QuizPanel.add(additionLabel);
+        QuizPanel.add(firstnumber, BorderLayout.SOUTH);
         QuizPanel.add(secondNumber);
         QuizPanel.add(calcSolution);
         QuizPanel.add(nextButton);
-        QuizPanel.add(quitButton);
+        QuizPanel.add(restartButton);
 
         this.getContentPane().removeAll();
         QuizPanel.setVisible(true);
@@ -88,13 +89,14 @@ public class Gui extends JFrame implements Observer {
 
     public void addActionListener(ActionListener listener) {
         this.loginButton.addActionListener(listener);
+        this.registerButton.addActionListener(listener);
         this.nextButton.addActionListener(listener);
-        this.quitButton.addActionListener(listener);
+        this.restartButton.addActionListener(listener);
     }
 
     private void quitGame(int score) {
         JPanel quitPanel = new JPanel();
-        JLabel scoreLabel = new JLabel("Your score: " + score);
+        JLabel scoreLabel = new JLabel("Your Earned: " + score);
         quitPanel.add(scoreLabel);
         this.getContentPane().removeAll();
         QuizPanel.setVisible(true);
