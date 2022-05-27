@@ -27,7 +27,7 @@ public class Database {
         try {
             conn = DriverManager.getConnection(url, dbusername, dbpassword);
             Statement statement = conn.createStatement();
-            String tableName = "UserInfo";
+            String tableName = "Account";
 
             if (!checkTableExisting(tableName)) {
                 statement.executeUpdate("CREATE TABLE " + tableName + " (userid VARCHAR(12), password VARCHAR(12), score INT)");

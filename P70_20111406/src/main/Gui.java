@@ -2,6 +2,8 @@
 package main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,9 +20,11 @@ public class Gui extends JFrame implements Observer {
     private JLabel uName = new JLabel("Username: ");
     private JLabel pWord = new JLabel("Password: ");    
     private JButton loginButton = new JButton("Log in");
+
     private JButton registerButton = new JButton("register");
+     private JLabel MILL = new JLabel(" Who wanna be a Millionare!!!! ");
    
-    // input
+    // login input
     public JTextField unInput = new JTextField(8);
     public JTextField pwInput = new JTextField(10);
     private JLabel wrongName = new JLabel("Wrong username or passwork!");
@@ -29,13 +33,11 @@ public class Gui extends JFrame implements Observer {
    ///2nd panel
     private JPanel QuizPanel = new JPanel();
     private JLabel Question = new JLabel();
-    private JLabel firstnumber = new JLabel();
-    private JLabel secondNumber = new JLabel();
-    private JLabel additionLabel = new JLabel();
+    private JLabel answer = new JLabel();
+    private JLabel answer2 = new JLabel();
     //private JTextField secondNumber = new JTextField(10);
     private JButton nextButton = new JButton("Next");
     private JButton restartButton = new JButton("restart");
-
 
     public JLabel message = new JLabel("Welcome!", JLabel.CENTER);
     public JTextField calcSolution = new JTextField(10);
@@ -47,31 +49,35 @@ public class Gui extends JFrame implements Observer {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(600, 600);
         this.setLocationRelativeTo(null); // Make the frame located at the absolute center of the screen.
+        
+        this.add(this.message, BorderLayout.BEFORE_FIRST_LINE);
+        MILL.setFont(new Font("Who wanna be a Millionare!!!!", Font.BOLD,40));
+        MILL.setForeground(Color.red);
+        this.userPanel.add(this.MILL);
         this.userPanel.add(uName);
         this.userPanel.add(unInput);
+        
         this.userPanel.add(pWord);
         this.userPanel.add(pwInput);
+        
         this.userPanel.add(loginButton);
         this.userPanel.add(registerButton);
-        this.add(this.message, BorderLayout.BEFORE_FIRST_LINE);
+        
         this.add(userPanel);
         this.setVisible(true);
     }
-            public void addedUser(){
+    public void addedUser(){
     userPanel.add(MadeAName);
     };
 
      public void Removeinvalid(){
      this.message.setText("Welcome");
     };
-
     public void startQuiz() {
-        QuizPanel.add(firstnumber, BorderLayout.SOUTH);
-        QuizPanel.add(secondNumber);
+        QuizPanel.add(Question);
         QuizPanel.add(calcSolution);
         QuizPanel.add(nextButton);
         QuizPanel.add(restartButton);
-
         this.getContentPane().removeAll();
         QuizPanel.setVisible(true);
         this.add(QuizPanel);
@@ -80,9 +86,10 @@ public class Gui extends JFrame implements Observer {
 
     }
 
-    public void setQuestion(int num1, int num2) {
-        firstnumber.setText(num1 + "");
-        secondNumber.setText(num2 + "=");
+    public void setQuestion(String q, String a,String a2) {
+        Question.setText(q);
+        answer.setText(a);
+        answer2.setText(a2);
         calcSolution.setText("");
         QuizPanel.repaint();
     }
@@ -96,7 +103,7 @@ public class Gui extends JFrame implements Observer {
 
     private void quitGame(int score) {
         JPanel quitPanel = new JPanel();
-        JLabel scoreLabel = new JLabel("Your Earned: " + score);
+        JLabel scoreLabel = new JLabel("Your Earned: " + score +"dollar!");
         quitPanel.add(scoreLabel);
         this.getContentPane().removeAll();
         QuizPanel.setVisible(true);
@@ -104,7 +111,6 @@ public class Gui extends JFrame implements Observer {
         this.revalidate();
         this.repaint();
     }
-
     /**
      * Step 7: Define the event when model has been modified.
      *
@@ -121,12 +127,11 @@ public class Gui extends JFrame implements Observer {
         } else if (!this.started) { // If the game has not started, then start the game.
             this.startQuiz(); // Change the interface of the frame.
             this.started = true;
-            this.setQuestion(data.num1, data.num2); 
-           
+            this.setQuestion(data.q, data.a,data.a); 
         } else if (data.quitFlag) { // If user quits the game, display user's current score.
             this.quitGame(data.currentScore);
         } else { // Otherwise, update a new question for the user.
-            this.setQuestion(data.num1, data.num2);
+            this.setQuestion(data.q, data.a,data.a);
         }
     }
 }

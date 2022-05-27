@@ -1,13 +1,13 @@
 /*
  * The programs are designed for PDC paper
  */
-package Task08_3;
+package main;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public final class SimpleDBManager {
+public final class QuizDB {
 
     /**
      * If you try to connect the database on the server, you must start the
@@ -20,19 +20,14 @@ public final class SimpleDBManager {
      * the server first. Meanwhile, you need to import 'derby.jar' to the
      * libraries.
      */
-    private static final String USER_NAME = "pdc"; //your DB username
-    private static final String PASSWORD = "pdc"; //your DB password
-    private static final String URL = "jdbc:derby:BookStoreDB_Ebd; create=true";  //url of the DB host
+    private static final String USER_NAME = "abc"; //your DB username
+    private static final String PASSWORD = "abc"; //your DB password
+    private static final String URL = "jdbc:derby://localhost:1527/Millionare";  //url of the DB host
 
     Connection conn;
 
-    public SimpleDBManager() {
+    public QuizDB() {
         establishConnection();
-    }
-
-    public static void main(String[] args) {
-        SimpleDBManager dbManager = new SimpleDBManager();
-        System.out.println(dbManager.getConnection());
     }
 
     public Connection getConnection() {
