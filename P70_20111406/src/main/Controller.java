@@ -11,16 +11,16 @@ public class Controller implements ActionListener {
     public Controller(Gui view, Model model) {
         this.view = view;
         this.model = model;
-        this.view.addActionListener(this); // Add Actionlistener (the instance of this class) to View.
+        this.view.addActionListener(this); // Add Actionlistener
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand(); // Obtain the text displayed on the component.
+        String command = e.getActionCommand(); 
         switch (command) {
             case "register":
                 // register button
-                String Username = this.view.unInput.getText(); // Obtain username.
-                String Password = this.view.pwInput.getText(); // Obtain password.
+                String Username = this.view.unInput.getText(); 
+                String Password = this.view.pwInput.getText(); 
             {
                 try {
                     this.model.register(Username, Password); // Pass above variables to model. Go to the checkName() of Model.java for step 6.

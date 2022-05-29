@@ -4,15 +4,17 @@ package main;
 import java.sql.SQLException;
 import java.util.Observable;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Model extends Observable {
-
+    QuizGetter quizget = new QuizGetter();
     public Database db;
     public Account acc;
     public int answer = 1;
     public String username; // To store the user name for later use.
-    
+    private int i = 1;
     /**
      * Step 2:
      * Initialize the instance of Database in the constructor,
@@ -34,7 +36,11 @@ public class Model extends Observable {
         this.username = username; // Store username
         this.acc = this.db.checkName(username, password); 
         if (acc.Checker) {
-            this.newQuestion();
+            try {
+                this.newQuestion();
+            } catch (SQLException ex) {
+                System.out.println("Model.Checkname() Quizget having prob");
+            }
         }
         this.setChanged(); 
         this.notifyObservers(this.acc); 
@@ -48,17 +54,19 @@ public class Model extends Observable {
         this.setChanged(); 
         this.notifyObservers(this.acc); 
     }
-    public void newQuestion() {
-        this.acc.num1 = getNumber();
-        this.acc.a ="answer";
-        this.answer = this.acc.num1; // Store the correct answer.
+    public void newQuestion() throws SQLException {
+        quizget = new QuizGetter(i);
+        i++;
+        this.acc.num1 = quizget.num;
+        this.acc.setQ(quizget.getQuestion());
+        this.acc.setA(quizget.getAnswer1());
+        this.acc.setA2(quizget.getAnswer2());
+        this.acc.setAns(i);
+        this.answer = quizget.getAns(); // Store the correct answer.
+        
     }
 /// 숫자 받는법
-    public int getNumber() {
-        Random generator = new Random();
-        int i = generator.nextInt(4);
-        return i;
-    }
+
 // 답 체크
     public void checkAnswer(String answer) {
         if (answer.equals(this.answer + "")) {
@@ -69,13 +77,16 @@ public class Model extends Observable {
             this.setChanged();
             this.notifyObservers(this.acc);
         }
-        this.newQuestion(); // Generate a new question for user.
+        try {
+            this.newQuestion(); // Generate a new question for user.
+        } catch (SQLException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setChanged(); 
         this.notifyObservers(this.acc);
     }
     public void restartGame() {
         this.db.SaveGame(this.acc.currentScore, this.username); 
-        this.acc.quitFlag = true; 
         this.setChanged();
         this.notifyObservers(this.acc);
     }

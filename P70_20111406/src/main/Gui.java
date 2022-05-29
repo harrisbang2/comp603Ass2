@@ -20,7 +20,6 @@ public class Gui extends JFrame implements Observer {
     private JLabel uName = new JLabel("Username: ");
     private JLabel pWord = new JLabel("Password: ");    
     private JButton loginButton = new JButton("Log in");
-
     private JButton registerButton = new JButton("register");
      private JLabel MILL = new JLabel(" Who wanna be a Millionare!!!! ");
    
@@ -35,14 +34,14 @@ public class Gui extends JFrame implements Observer {
     private JLabel Question = new JLabel();
     private JLabel answer = new JLabel();
     private JLabel answer2 = new JLabel();
-    //private JTextField secondNumber = new JTextField(10);
+
     private JButton nextButton = new JButton("Next");
     private JButton restartButton = new JButton("restart");
 
     public JLabel message = new JLabel("Welcome!", JLabel.CENTER);
     public JTextField calcSolution = new JTextField(10);
 
-    private boolean started = false; // To identify if the game part starts.
+    private boolean started = false;
 
 
     public Gui() {
@@ -74,22 +73,33 @@ public class Gui extends JFrame implements Observer {
      this.message.setText("Welcome");
     };
     public void startQuiz() {
+ 
         QuizPanel.add(Question);
         QuizPanel.add(calcSolution);
         QuizPanel.add(nextButton);
-        QuizPanel.add(restartButton);
+        QuizPanel.add(restartButton); 
+        QuizPanel.add(answer);
+        QuizPanel.add(answer2);  
         this.getContentPane().removeAll();
         QuizPanel.setVisible(true);
         this.add(QuizPanel);
         this.revalidate();
         this.repaint();
+        
 
+    }
+    public void Restart(){
+        this.getContentPane().removeAll();
+        userPanel.setVisible(true);
+        this.add(userPanel);
+        this.revalidate();
+        this.repaint();
     }
 
     public void setQuestion(String q, String a,String a2) {
-        Question.setText(q);
-        answer.setText(a);
-        answer2.setText(a2);
+        Question.setText(q+" ");
+        answer.setText("                            "+a+" ");
+        answer2.setText(a2+" ");
         calcSolution.setText("");
         QuizPanel.repaint();
     }
@@ -103,7 +113,7 @@ public class Gui extends JFrame implements Observer {
 
     private void quitGame(int score) {
         JPanel quitPanel = new JPanel();
-        JLabel scoreLabel = new JLabel("Your Earned: " + score +"dollar!");
+        JLabel scoreLabel = new JLabel("Game over! Your Earned: " + score +"dollar!");
         quitPanel.add(scoreLabel);
         this.getContentPane().removeAll();
         QuizPanel.setVisible(true);
@@ -119,19 +129,19 @@ public class Gui extends JFrame implements Observer {
      */
     @Override
     public void update(Observable o, Object arg) {
-        Account data = (Account) arg; // Obtain the instance of data.
-        if (!data.Checker) { // If loginFlage is false, then ask the user to input again.
+        Account acc = (Account) arg; // Obtain the instance of data.
+        if (!acc.Checker) { // If loginFlage is false, then ask the user to input again.
             this.unInput.setText("");
             this.pwInput.setText("");
             this.message.setText("Invalid username or password.");
         } else if (!this.started) { // If the game has not started, then start the game.
             this.startQuiz(); // Change the interface of the frame.
             this.started = true;
-            this.setQuestion(data.q, data.a,data.a); 
-        } else if (data.quitFlag) { // If user quits the game, display user's current score.
-            this.quitGame(data.currentScore);
+            this.setQuestion(acc.getQ(), acc.getA(),acc.getA2()); 
+        } else if (acc.quitFlag) { // If user quits the game, display user's current score.
+            this.quitGame(acc.currentScore);
         } else { // Otherwise, update a new question for the user.
-            this.setQuestion(data.q, data.a,data.a);
+            this.setQuestion(acc.getQ(), acc.getA(),acc.getA2());
         }
     }
 }

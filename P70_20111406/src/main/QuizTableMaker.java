@@ -21,33 +21,7 @@ public class QuizTableMaker{
             System.out.println(ex.getMessage());
         }
 
-    }
-
-    public static void main(String[] args) {
-        QuizTableMaker sbs = new QuizTableMaker();
-if(sbs.checkTableExisting("Question")==false){
- try {
-            sbs.statement.addBatch("CREATE  TABLE Question  (ID  INT,   Question   VARCHAR(50),   answer   VARCHAR(20),answer1   VARCHAR(20)   ,ansnum   INT)");
-            sbs.statement.addBatch(""
-                    + "INSERT INTO Question VALUES ("
-                    + "1, 'q1', 'Fiction', 'Fiction', 1),\n"
-                    + "(2, 'q2', 'Fiction', 'Fiction', 2),\n"
-                    + "(3, 'q3', 'Fiction', 'Fiction', 1),\n"
-                    + "(4, 'q4', 'Non-fiction', 'Fiction', 2),\n"
-                    + "(5, 'Far Eastern Odyssey', 'Fiction', 'Non-fiction', 1),\n"
-                    + "(6, 'Open', 'Non-fiction', 'Fiction', 2),\n"
-                    + "(7, 'Big Java', 'Textbook', 'Fiction', 1),\n"
-                    + "(8, 'Financial Accounting', 'Fiction', 'Textbook', 2)");
-            sbs.statement.executeBatch();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
-        sbs.closeConnection();
-    }
-
-}
-       
-
+    }       
     public void closeConnection() {
         this.dbManager.closeConnections();
     }
@@ -73,4 +47,28 @@ if(sbs.checkTableExisting("Question")==false){
         }
         return exists;
     }
+    
+  public void maketable(){
+    QuizTableMaker sbs = new QuizTableMaker();
+       if(sbs.checkTableExisting("Question")==false){
+       try {
+            sbs.statement.addBatch("CREATE  TABLE Question  (ID  INT,   Question   VARCHAR(50),   answer   VARCHAR(20),answer1   VARCHAR(20)   ,ansnum   INT)");
+            sbs.statement.addBatch(""
+                    + "INSERT INTO Question VALUES ("
+                    + "1, 'Is naruto fiction?(ans should be 1 or 2)','1.Fiction', '2.non-Fiction', 1),\n"
+                    + "(2, 'Q2 Is AUT in North Korea?(ans should be 1 or 2)', '1.yup', '2.nope', 2),\n"
+                    + "(3, 'Q3 Where is Dunedin(ans should be 1 or 2)', '1.south island', '2.north island', 1),\n"
+                    + "(4, 'Q4 Harry potter is a(ans should be 1 or 2)', '1.Non-fiction', '2.Fiction', 2),\n"
+                    + "(5, 'Q5 apple is a:(ans should be 1 or 2)', '1.fruit', '2.vegetable', 1),"
+                    +"(6,'That is the End of the questions...(for now) gg!', '.', '.', 52)"
+            );
+            sbs.statement.executeBatch();
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        sbs.closeConnection();
+  }
+       
+  }
+
 }
