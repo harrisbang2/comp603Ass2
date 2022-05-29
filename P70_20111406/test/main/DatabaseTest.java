@@ -46,7 +46,7 @@ public class DatabaseTest {
         Database instance = new Database();
         instance.dbsetup();
         // TODO review the generated test code and remove the default call to fail.
-        
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -62,7 +62,23 @@ public class DatabaseTest {
         Account result = instance.checkName(username, password);
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-        
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of register method, of class Database.
+     */
+    @Test
+    public void testRegister() throws Exception {
+        System.out.println("register");
+        String username = "";
+        String password = "";
+        Database instance = new Database();
+        Account expResult = null;
+        Account result = instance.register(username, password);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
     }
 
     /**
@@ -76,7 +92,7 @@ public class DatabaseTest {
         Database instance = new Database();
         instance.SaveGame(score, username);
         // TODO review the generated test code and remove the default call to fail.
-       
+        fail("The test case is a prototype.");
     }
     
 }

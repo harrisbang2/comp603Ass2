@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,7 +23,7 @@ public class Gui extends JFrame implements Observer {
     private JButton loginButton = new JButton("Log in");
     private JButton registerButton = new JButton("register");
      private JLabel MILL = new JLabel(" Who wanna be a Millionare!!!! ");
-   
+    private JLabel image = new JLabel();
     // login input
     public JTextField unInput = new JTextField(8);
     public JTextField pwInput = new JTextField(10);
@@ -61,7 +62,9 @@ public class Gui extends JFrame implements Observer {
         
         this.userPanel.add(loginButton);
         this.userPanel.add(registerButton);
-        
+        ImageIcon pic = new ImageIcon("resources/pic.jpg");
+        image.setIcon(pic);
+        this.userPanel.add(image);
         this.add(userPanel);
         this.setVisible(true);
     }
